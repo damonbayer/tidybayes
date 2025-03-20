@@ -142,7 +142,7 @@ tidy_draws.data.frame = function(model, ...) {
 #' @export
 tidy_draws.mcmc.list = function(model, ...) {
   draws = do.call(rbind, lapply(seq_along(model), function(chain) {
-    n = nrow(model[[chain]])
+    n = coda::niter(model[[chain]])
     iteration = seq_len(n)
 
     add_column(
