@@ -181,7 +181,6 @@ tidy_draws.stanreg = function(model, ...) {
   #so we dont' just do tidy_draws(model$stanfit)
   sample_matrix = as.array(model) #[iteration, chain, variable]
   n_chain = dim(sample_matrix)[[2]]
-  
   mcmc_list = as.mcmc.list(lapply(seq_len(n_chain), function(chain) as.mcmc(abind::adrop(sample_matrix[, chain, , drop=FALSE], drop = 2)))) # nolint
   draws = tidy_draws(mcmc_list, ...)
   draws = add_rstan_sampler_param_draws(draws, model$stanfit)
