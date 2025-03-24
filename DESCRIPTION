@@ -29,7 +29,8 @@ Imports:
     posterior (>= 1.0.1),
     withr,
     cli,
-    vctrs
+    vctrs,
+    abind
 Suggests:
     knitr,
     testthat,
