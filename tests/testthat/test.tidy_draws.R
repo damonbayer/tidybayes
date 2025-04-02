@@ -231,3 +231,4 @@ test_that("tidy_draws works on a draws object", {
 
   expect_equal(tidy_draws(d), as_tibble(posterior::as_draws_df(d)))
 })
+
