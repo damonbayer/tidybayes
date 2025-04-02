@@ -229,11 +229,12 @@ test_that("tidy_draws works on a draws object", {
 
 test_that("tidy_draws works with mcmc.list objects with a single variable", {
   mcmc_list <- coda::as.mcmc.list(coda::as.mcmc(seq_len(10)))
+  varnames(mcmc_list) <- "a_var_name"
   expected_tbl <- tibble(
     .chain = rep(1L, 10L),
     .iteration = 1:10,
     .draw = 1:10,
-    var1 = 1:10
+    a_var_name = 1:10
   )
   expect_equal(tidy_draws(mcmc_list), expected_tbl)
 })
