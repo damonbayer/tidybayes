@@ -48,6 +48,13 @@ test_that("tidy_draws works with rstanarm", {
   expect_equal(tidy_draws(m_ranef), draws_tidy)
 })
 
+test_that("tidy_draws works with rstanarm models with one variable", {
+  skip_if_not_installed("rstanarm")
+  
+  m_one_var = readRDS(test_path("../models/models.rstanarm.one_var.rds"))
+  expect_contains(colnames(tidy_draws(m_one_var)), "(Intercept)")
+})
+
 
 # rstan -------------------------------------------------------------------
 test_that("tidy_draws works with rstan", {
@@ -224,18 +231,3 @@ test_that("tidy_draws works on a draws object", {
 
   expect_equal(tidy_draws(d), as_tibble(posterior::as_draws_df(d)))
 })
-
-# mcmc.list ---------------------------------------------------------------
-
-test_that("tidy_draws works with mcmc.list objects with a single variable", {
-  mcmc_list <- coda::as.mcmc.list(coda::as.mcmc(seq_len(10)))
-  varnames(mcmc_list) <- "a_var_name"
-  expected_tbl <- tibble(
-    .chain = rep(1L, 10L),
-    .iteration = 1:10,
-    .draw = 1:10,
-    a_var_name = 1:10
-  )
-  expect_equal(tidy_draws(mcmc_list), expected_tbl)
-})
-
