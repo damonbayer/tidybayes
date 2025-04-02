@@ -51,6 +51,21 @@ test_that("tidy_draws works with rstanarm", {
 test_that("tidy_draws works with rstanarm models with one variable", {
   skip_if_not_installed("rstanarm")
   
+  # Code to reproduce data:  
+  # library(rstanarm)
+  # library(tidybayes)
+  # set.seed(1)
+  # # Simulate some data
+  # true_prob <- 0.25
+  # n <- sample(10:20, 20, replace = TRUE)
+  # y <- rbinom(20, n, true_prob)
+  # dat <- data.frame(hits = y, misses = n - y)
+  # 
+  # # Fit an intercept-only model
+  # m <- stan_glm(cbind(hits, misses) ~ 1, data = dat, family = binomial(),
+  #               iter = 100, chains = 2, seed = 1)
+  # readr::write_rds(m, "tests/models/models.rstanarm.one_var.rds")
+  
   m_one_var = readRDS(test_path("../models/models.rstanarm.one_var.rds"))
   expect_contains(colnames(tidy_draws(m_one_var)), "(Intercept)")
 })
